@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jqueryapp1</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<style>
+      .caculator {
+        margin: auto;
+        margin-top: 30px;
+        display: inline block;
+        background-color: gray;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        width: 300px;
+        height: 400px;
+        color: white;
+      }
+      .screen {
+        background-color: green;
+        border-radius: 5px;
+        text-align: right;
+        padding-right: 10px;
+      }
+      Button {
+        height: 50px;
+        width: 60px;
+        border-radius: 5px;
+      }
+      input{
+       background-color: green;
+        border: 1px solid green;
+      }
+    </style>
+</style>
+</head>
+<body>
+    <div class="container">
+      <!--ô tính toán -->
+      <div class="caculator">
+        <!--ô hiển thị-->
+        <div class="screen">
+          <!--ô số nhập vào-->
+           <input type="text" class="boxCalculation" value="" >
+          <!--ô kết quả -->
+          <input type="text" class="boxResult" value="">
+        </div>
+        <!--nút tính toán -->
+        <div class="buttonBox">
+          <div class="caculatorButton">
+            <button class="MC">MC</button>
+            <button class="Del">Del</button>
+            <button class="divide">/</button>
+            <button class="times operation">*</button>
+          </div>
+          <!--nút nhập số -->
+          <div class="numberButton">
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="minus operation">-</button>
+          </div>
+          <div class="numberButton">
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="plus operation">+</button>
+          </div>
+          <div class="numberButton" style="display:inline-block">
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+          </div>
+          <div
+            class="equalButton"
+            style=" float: right; padding-right:4px"
+          >
+            <button class="equal" style="height:100px">=</button>
+          </div>
+          <div class="bottomButton" style="display:inline-block">
+            <button class="number" style="width:124px">0</button>
+            <button class="dot">.</button>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <script>
+        // khi tải trang
+      $(document).ready(function() {
+            $(".boxCalculation").attr("disabled", "true"); // Vô hiệu hoá ô nhập vào
+            $(".boxResult").attr("disabled", "true"); // Vô hiệu hoá ô kết quả
+            $(".buttonBox button.times").attr("disabled", "true"); // Vô hiệu hoá nút nhân
+            $(".buttonBox button.divide").attr("disabled", "true"); // Vô hiệu hoá nút chia
+            $(".buttonBox button.equal").attr("disabled", "true"); // Vô hiệu hoá nút bằng
+        });
+      // khi ấn vào nút số bất kỳ
+        $('.buttonBox button.number').on('click', function() {
+            $char = $(this).html(); // Lấy số vừa click
+            $value_calculation = $('.boxCalculation').val(); // Lấy chuỗi giá trị trong ô phép tính
+            $('.boxCalculation').val($value_calculation + $char); // Thêm số vừa click vào sau chuỗi giá trị trong ô phép tính
+            $('.buttonBox button.times').removeAttr('disabled'); // Gỡ bỏ vô hiệu hoá các nút phép toán
+            $('.buttonBox button.divide').removeAttr('disabled'); // Gỡ bỏ vô hiệu hoá các nút phép toán
+            $('.buttonBox button.equal').removeAttr('disabled'); // Gỡ bỏ vô hiệu hoá nút bằng
+        });
+          //khi nhấn dấu chấm 
+          $('.buttonBox button.dot').on('click', function() {
+            $char = $(this).html(); // Lấy dấu chấm
+            $value_calculation = $('.box-calculation').val(); // Lấy chuỗi giá trị trong ô phép tính
+            $('.boxCalculation').val($value_calculation + $char); // Thêm dấu chấm vào sau chuỗi giá trị trong ô phép tính
+  
+        });
+        // khi nhấn vào nút MC
+        $('.buttonBox button.MC').on('click', function() {
+            $('.boxCalculation').val(''); // Làm trống ô phép tính
+            $('.boxResult').val(''); // Làm trống ô kết quả
+        });
+        //khi nhấn vào nút del
+        $('.buttonBox button.Del').on('click', function() {
+            $string = $('.boxCalculation').val(); // Lấy giá trị trong ô phép tính
+            $('.boxCalculation').val($string.substring(0, $string.length - 1)); // Xoá ký tự cuối cùng chuỗi giá trị trong ô phép tính
+        });
+      
+
+        //khi nhấn vào nút phép tính nhân 
+        $('.buttonBox button.times').on('click', function() {
+            $char = $(this).html(); // Lấy dấu phép nhân vừa click
+            $value_calculation = $('.boxCalculation').val(); // Lấy chuỗi giá trị trong ô phép tính
+            $('.boxCalculation').val($value_calculation + $char); // Thêm dấu phép toán vừa click vào sau chuỗi giá trị trong ô phép tính
+        });
+        //khi nhấn vào nút phép tính cộng
+        $('.buttonBox button.plus').on('click', function() {
+            $char = $(this).html(); // Lấy dấu phép nhân vừa click
+            $value_calculation = $('.boxCalculation').val(); // Lấy chuỗi giá trị trong ô phép tính
+            $('.boxCalculation').val($value_calculation + $char); // Thêm dấu phép toán vừa click vào sau chuỗi giá trị trong ô phép tính
+        });
+        //khi nhấn vào nút phép tính trừ 
+        $('.buttonBox button.minus').on('click', function() {
+            $char = $(this).html(); // Lấy dấu phép nhân vừa click
+            $value_calculation = $('.boxCalculation').val(); // Lấy chuỗi giá trị trong ô phép tính
+            $('.boxCalculation').val($value_calculation + $char); // Thêm dấu phép toán vừa click vào sau chuỗi giá trị trong ô phép tính
+        });
+        //khi nhấn vào nút phép tính chia 
+        $('.buttonBox button.divide').on('click', function() {
+            $char = $(this).html(); // Lấy dấu phép nhân vừa click
+            $value_calculation = $('.boxCalculation').val(); // Lấy chuỗi giá trị trong ô phép tính
+            $('.boxCalculation').val($value_calculation + $char); // Thêm dấu phép toán vừa click vào sau chuỗi giá trị trong ô phép tính
+        });
+        // Thực hiện các hành động bên trong khi click vào các nút bằng
+        $('.buttonBox button.equal').on('click', function() {
+            $result = $('.boxCalculation').val(); // Lấy chuỗi giá trị trong ô phép tính
+            $('.boxResult').val(eval($result)); // Hiển thị kết quả trong ô kết quả
+        });
+    </script>
+  </body>
+</html>
